@@ -101,13 +101,21 @@ export default function Home() {
 
       {/* Featured Products */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-12">
-          <div>
-            <h2 className="text-3xl font-serif font-bold text-[var(--text-primary)] mb-2">Produits en Vedette</h2>
-            <p className="text-[var(--text-secondary)]">Nos best-sellers plébiscités par nos clients.</p>
+        <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8 sm:mb-12">
+          <div className="max-w-md">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[var(--text-primary)] mb-2 leading-tight">
+              Produits en Vedette
+            </h2>
+            <p className="text-sm sm:text-base text-[var(--text-secondary)]">
+              Nos best-sellers plébiscités par nos clients.
+            </p>
           </div>
-          <Link to="/catalogue" className="text-[var(--accent)] font-bold hover:underline flex items-center">
-            Voir tout <ArrowRight size={16} className="ml-1" />
+
+          <Link 
+            to="/catalogue" 
+            className="text-[var(--accent)] font-bold hover:underline flex items-center text-sm sm:text-base whitespace-nowrap self-start md:self-auto"
+          >
+            Voir tout <ArrowRight size={16} className="ml-1 shrink-0" />
           </Link>
         </div>
 
@@ -120,36 +128,51 @@ export default function Home() {
 
       {/* Promo Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-[var(--accent)] text-white p-12 md:p-24 flex flex-col md:flex-row items-center gap-12">
-          <div className="flex-1 space-y-6">
+        <div className="relative rounded-3xl overflow-hidden bg-[var(--accent)] text-white p-8 md:p-24 flex flex-col lg:flex-row items-center gap-12">
+          
+          {/* Texte et Formulaire */}
+          <div className="flex-1 space-y-6 w-full text-center lg:text-left z-10">
             <div className="inline-flex items-center space-x-2 text-[var(--accent-light)]">
               <Sparkles size={20} />
               <span className="text-sm font-bold uppercase tracking-widest">Offre Spéciale</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold leading-tight">
+            
+            <h2 className="text-3xl md:text-5xl font-serif font-bold leading-tight">
               -15% sur votre première commande
             </h2>
-            <p className="text-lg text-gray-200">
+            
+            <p className="text-base md:text-lg text-gray-200 max-w-lg mx-auto lg:mx-0">
               Inscrivez-vous à notre newsletter et recevez un code promo exclusif.
             </p>
-            <form onSubmit={(e) => e.preventDefault()} className="flex gap-2">
+
+            {/* Formulaire Responsive : Colonne sur mobile, Ligne sur tablette+ */}
+            <form 
+              onSubmit={(e) => e.preventDefault()} 
+              className="flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto lg:mx-0"
+            >
               <input
                 type="email"
                 placeholder="Votre email"
-                className="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 focus:outline-none focus:bg-white/20 transition-colors"
+                className="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 focus:outline-none focus:bg-white/20 transition-colors text-center sm:text-left"
               />
-              <button type="submit" className="px-8 py-4 bg-white text-[var(--accent)] font-bold rounded-full hover:bg-[var(--accent-light)] transition-colors">
+              <button 
+                type="submit" 
+                className="px-8 py-4 bg-white text-[var(--accent)] font-bold rounded-full hover:bg-[var(--accent-light)] transition-all active:scale-95 whitespace-nowrap"
+              >
                 S'inscrire
               </button>
             </form>
           </div>
-          <div className="flex-1">
+
+          {/* Image : Cachée sur petit mobile ou ajustée */}
+          <div className="flex-1 w-full max-w-sm lg:max-w-none">
             <img
               src={`${import.meta.env.BASE_URL}assets/images/PromoBanner.avif`} 
               alt="Promo"
-              className="rounded-2xl shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500"
+              className="rounded-2xl shadow-2xl rotate-0 md:rotate-3 hover:rotate-0 transition-transform duration-500 w-full h-auto object-cover"
             />
           </div>
+
         </div>
       </section>
     </div>

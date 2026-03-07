@@ -39,25 +39,36 @@ export default function Cart() {
             <motion.div
               key={item.id}
               layout
-              className="flex items-center gap-6 p-6 bg-[var(--bg-primary)] rounded-2xl border border-[var(--border)] shadow-sm"
+              // Changement : "flex-row" (mobile) pour garder l'image à côté, mais on assure l'alignement
+              className="flex items-start sm:items-center gap-4 p-4 sm:p-6 bg-[var(--bg-primary)] rounded-2xl border border-[var(--border)] shadow-sm"
             >
-              <div className="w-24 h-24 rounded-xl overflow-hidden bg-[var(--bg-secondary)] shrink-0">
+              {/* Image : Taille légèrement réduite sur mobile pour gagner de la place */}
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-[var(--bg-secondary)] shrink-0">
                 <img src={item.image} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
               </div>
+
+              {/* Contenu : On utilise flex-1 et min-w-0 pour forcer le respect du parent */}
               <div className="flex-1 min-w-0">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-bold text-[var(--text-primary)] truncate">{item.name}</h3>
-                    <p className="text-sm text-[var(--text-secondary)]">{item.category}</p>
+                <div className="flex justify-between items-start gap-2">
+                  <div className="min-w-0 flex-1">
+                    {/* Changement : Retrait de "truncate" pour permettre le retour à la ligne automatique */}
+                    <h3 className="text-base sm:text-lg font-bold text-[var(--text-primary)] break-words leading-tight">
+                      {item.name}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[var(--text-secondary)]">{item.category}</p>
                   </div>
+                  
+                  {/* Bouton Delete : On le garde dans le flux pour qu'il ne sorte pas */}
                   <button
                     onClick={() => removeFromCart(item.id)}
-                    className="text-[var(--text-secondary)] hover:text-red-500 transition-colors"
+                    className="text-[var(--text-secondary)] hover:text-red-500 transition-colors shrink-0 p-1"
                   >
                     <Trash2 size={18} />
                   </button>
                 </div>
-                <div className="flex justify-between items-center mt-4">
+
+                {/* Quantité et Prix : Passage en colonne sur très petit écran si nécessaire, ou réduction des espaces */}
+                <div className="flex flex-wrap justify-between items-center mt-4 gap-2">
                   <div className="flex items-center space-x-3 bg-[var(--bg-secondary)] rounded-full px-3 py-1">
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -73,7 +84,8 @@ export default function Cart() {
                       <Plus size={14} />
                     </button>
                   </div>
-                  <span className="font-bold text-[var(--accent)]">
+                  
+                  <span className="font-bold text-[var(--accent)] whitespace-nowrap">
                     {((item.discount_price || item.price) * item.quantity).toFixed(2)}€
                   </span>
                 </div>

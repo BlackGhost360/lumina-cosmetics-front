@@ -75,9 +75,9 @@ export default function Navbar() {
             >
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
-            <button className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">
+           {/* <button className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">
               <Search size={20} />
-            </button>
+            </button>*/}
             <Link to="/panier" className="relative text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">
               <ShoppingBag size={20} />
               {totalItems > 0 && (

@@ -12,17 +12,15 @@ export default function ProductDetail() {
   const { addToCart } = useCart();
   const [activeTab, setActiveTab] = useState("description");
 
-  // ✅ Recherche du produit optimisée avec useMemo
   const product = useMemo(() => {
     return (productsData as Product[]).find((p) => p.id === Number(id)) || null;
   }, [id]);
 
-  // Si le produit n'existe pas, on affiche un message d'erreur
   if (!product) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center space-y-4">
+      <div className="h-screen flex flex-col items-center justify-center p-4 text-center">
         <p className="text-xl font-serif text-[var(--text-secondary)]">Produit non trouvé.</p>
-        <Link to="/catalogue" className="text-[var(--accent)] font-bold hover:underline">
+        <Link to="/catalogue" className="text-[var(--accent)] font-bold hover:underline mt-4">
           Retourner au catalogue
         </Link>
       </div>
@@ -30,22 +28,25 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+      {/* Bouton Retour - Plus compact sur mobile */}
       <Link 
         to="/catalogue" 
-        className="inline-flex items-center text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] mb-8 group"
+        className="inline-flex items-center text-xs sm:text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] mb-6 sm:mb-8 group"
       >
         <ArrowLeft size={16} className="mr-2 transition-transform group-hover:-translate-x-1" /> 
         Retour au catalogue
       </Link>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-        {/* Image Gallery */}
+      {/* Grid Principal : 1 col sur mobile, 2 cols sur tablette/desktop */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+        
+        {/* Partie Gauche : Galerie Images */}
         <div className="space-y-4">
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="aspect-[4/5] rounded-3xl overflow-hidden bg-[var(--bg-secondary)]"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="aspect-[4/5] rounded-2xl sm:rounded-3xl overflow-hidden bg-[var(--bg-secondary)]"
           >
             <img
               src={`${import.meta.env.BASE_URL}${product.image}`}
@@ -53,11 +54,12 @@ export default function ProductDetail() {
               className="w-full h-full object-cover"
             />
           </motion.div>
-          <div className="grid grid-cols-4 gap-4">
+          {/* Miniatures : Scroll horizontal sur mobile si trop d'images */}
+          <div className="flex sm:grid sm:grid-cols-4 gap-3 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
             {[1, 2, 3, 4].map((i) => (
               <div 
                 key={i} 
-                className="aspect-square rounded-xl overflow-hidden bg-[var(--bg-secondary)] cursor-pointer opacity-60 hover:opacity-100 transition-opacity"
+                className="w-20 h-20 sm:w-auto sm:aspect-square shrink-0 rounded-xl overflow-hidden bg-[var(--bg-secondary)] cursor-pointer opacity-60 hover:opacity-100 transition-opacity"
               >
                 <img src={`${import.meta.env.BASE_URL}${product.image}`} alt="" className="w-full h-full object-cover" />
               </div>
@@ -65,67 +67,67 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Product Info */}
-        <div className="space-y-8">
-          <div className="space-y-2">
-            <p className="text-sm font-bold uppercase tracking-widest text-[var(--accent)]">
-              {product.category}
-            </p>
-            <h1 className="text-4xl font-serif font-bold text-[var(--text-primary)]">
-              {product.name}
-            </h1>
-            <div className="flex items-center space-x-4">
+        {/* Partie Droite : Infos Produit */}
+        <div className="flex flex-col">
+          <div className="space-y-4">
+            <div>
+              <p className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[var(--accent)] mb-1">
+                {product.category}
+              </p>
+              <h1 className="text-2xl sm:text-4xl font-serif font-bold text-[var(--text-primary)] leading-tight">
+                {product.name}
+              </h1>
+            </div>
+
+            <div className="flex items-center space-x-3">
               <div className="flex text-yellow-400">
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} size={16} fill={s <= 4 ? "currentColor" : "none"} />
+                  <Star key={s} size={14} fill={s <= 4 ? "currentColor" : "none"} />
                 ))}
               </div>
-              <span className="text-sm text-[var(--text-secondary)]">(24 avis clients)</span>
+              <span className="text-xs sm:text-sm text-[var(--text-secondary)]">(24 avis)</span>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              {product.discount_price ? (
+                <>
+                  <span className="text-2xl sm:text-3xl font-bold text-[var(--accent)]">
+                    {product.discount_price.toFixed(2)}€
+                  </span>
+                  <span className="text-lg sm:text-xl text-[var(--text-secondary)] line-through">
+                    {product.price.toFixed(2)}€
+                  </span>
+                </>
+              ) : (
+                <span className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
+                  {product.price.toFixed(2)}€
+                </span>
+              )}
+            </div>
+
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+              {product.description}
+            </p>
+
+            <div className="pt-4">
+              <button
+                onClick={() => addToCart(product)}
+                className="w-full py-4 bg-[var(--accent)] text-white font-bold rounded-full hover:shadow-lg active:scale-95 transition-all flex items-center justify-center space-x-2"
+              >
+                <ShoppingCart size={20} />
+                <span>Ajouter au panier</span>
+              </button>
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            {product.discount_price ? (
-              <>
-                <span className="text-3xl font-bold text-[var(--accent)]">
-                  {product.discount_price.toFixed(2)}€
-                </span>
-                <span className="text-xl text-[var(--text-secondary)] line-through">
-                  {product.price.toFixed(2)}€
-                </span>
-                <span className="bg-[var(--accent-light)] text-[var(--accent)] text-xs font-bold px-2 py-1 rounded">
-                  PROMO
-                </span>
-              </>
-            ) : (
-              <span className="text-3xl font-bold text-[var(--text-primary)]">
-                {product.price.toFixed(2)}€
-              </span>
-            )}
-          </div>
-
-          <p className="text-[var(--text-secondary)] leading-relaxed">
-            {product.description}
-          </p>
-
-          <div className="space-y-4 pt-6 border-t border-[var(--border)]">
-            <button
-              onClick={() => addToCart(product)}
-              className="w-full py-4 bg-[var(--accent)] text-white font-bold rounded-full hover:shadow-lg hover:brightness-110 transition-all flex items-center justify-center space-x-2"
-            >
-              <ShoppingCart size={20} />
-              <span>Ajouter au panier</span>
-            </button>
-          </div>
-
-          {/* Tabs */}
-          <div className="pt-12">
-            <div className="flex border-b border-[var(--border)] mb-6">
+          {/* Onglets (Tabs) : Corrigés pour Mobile */}
+          <div className="mt-10 sm:mt-12">
+            <div className="flex border-b border-[var(--border)] overflow-x-auto no-scrollbar">
               {["description", "ingredients", "livraison"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-3 text-sm font-bold uppercase tracking-widest transition-colors relative ${
+                  className={`px-4 sm:px-6 py-3 text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-colors relative whitespace-nowrap ${
                     activeTab === tab 
                       ? "text-[var(--accent)]" 
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -141,12 +143,12 @@ export default function ProductDetail() {
                 </button>
               ))}
             </div>
-            <div className="text-sm text-[var(--text-secondary)] leading-relaxed min-h-[100px]">
+            <div className="py-6 text-sm text-[var(--text-secondary)] leading-relaxed min-h-[120px]">
               {activeTab === "description" && (
                 <p>Ce produit {product.name.toLowerCase()} a été formulé pour répondre aux besoins spécifiques de votre peau. Sa texture légère pénètre rapidement sans laisser de film gras.</p>
               )}
               {activeTab === "ingredients" && (
-                <p>{product.ingredients || "Liste des ingrédients non disponible pour ce produit."}</p>
+                <p className="italic">{product.ingredients || "Liste des ingrédients non disponible."}</p>
               )}
               {activeTab === "livraison" && (
                 <p>Livraison standard offerte dès 50€ d'achat. Expédition sous 24h. Retours gratuits sous 30 jours.</p>
@@ -154,11 +156,11 @@ export default function ProductDetail() {
             </div>
           </div>
 
-          {/* Trust Badges */}
-          <div className="grid grid-cols-3 gap-4 pt-8 border-t border-[var(--border)]">
-            <Badge icon={<ShieldCheck size={20} />} label="Paiement Sécurisé" />
-            <Badge icon={<Truck size={20} />} label="Livraison Rapide" />
-            <Badge icon={<RefreshCw size={20} />} label="Retours Faciles" />
+          {/* Trust Badges : 1 ligne sur mobile, icônes plus petites */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-8 border-t border-[var(--border)] mt-auto">
+            <Badge icon={<ShieldCheck size={18} />} label="Sécurisé" />
+            <Badge icon={<Truck size={18} />} label="Rapide" />
+            <Badge icon={<RefreshCw size={18} />} label="Retours" />
           </div>
         </div>
       </div>
@@ -166,12 +168,11 @@ export default function ProductDetail() {
   );
 }
 
-// Petit composant interne pour les badges afin d'alléger le JSX
 function Badge({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <div className="flex flex-col items-center text-center space-y-2">
+    <div className="flex flex-col items-center text-center space-y-1">
       <div className="text-[var(--accent)]">{icon}</div>
-      <span className="text-[10px] font-bold uppercase tracking-tighter text-[var(--text-primary)]">
+      <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-tight text-[var(--text-primary)]">
         {label}
       </span>
     </div>
