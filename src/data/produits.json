@@ -8,9 +8,9 @@
     "brand": "L'Oréal",
     "image": "assets/images/produits/image1.avif",
     "ingredients": "Acide Hyaluronique, Vitamine B5",
-    "is_featured": true,
+    "is_featured": false,
     "is_new": true,
-    "discount_price": 17.50
+    "discount_price": 10.50
   },
   {
     "id": 2,
@@ -21,9 +21,9 @@
     "brand": "L'Oréal",
     "image": "assets/images/produits/image2.avif",
     "ingredients": "Truffe Noire, Thé Noir",
-    "is_featured": false,
+    "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 9.99
   },
   {
     "id": 3,
@@ -34,9 +34,9 @@
     "brand": "L'Oréal",
     "image": "assets/images/produits/image3.avif",
     "ingredients": "Aloe Vera, Acide Hyaluronique",
-    "is_featured": false,
+    "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 7.99
   },
   {
     "id": 4,
@@ -47,9 +47,9 @@
     "brand": "L'Oréal",
     "image": "assets/images/produits/image4.avif",
     "ingredients": "Kaolin, Montmorillonite, Ghassoul",
-    "is_featured": false,
+    "is_featured": true,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 5.99
   },
   {
     "id": 5,
@@ -73,9 +73,9 @@
     "brand": "L'Oréal",
     "image": "assets/images/produits/image6.avif",
     "ingredients": "Collagène, Beurre de Karité",
-    "is_featured": false,
+    "is_featured": true,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 5.00
   },
   {
     "id": 7,
@@ -86,9 +86,9 @@
     "brand": "L'Oréal",
     "image": "assets/images/produits/image7.avif",
     "ingredients": "DHA, Vitamine E",
-    "is_featured": false,
+    "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 8.99
   },
   {
     "id": 8,
@@ -101,7 +101,7 @@
     "ingredients": "6 huiles de fleurs rares",
     "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 5.99
   },
   {
     "id": 9,
@@ -153,7 +153,7 @@
     "ingredients": "Acide Hyaluronique",
     "is_featured": false,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 7.99
   },
   {
     "id": 13,
@@ -166,7 +166,7 @@
     "ingredients": "Pigments minéraux",
     "is_featured": false,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 7.99
   },
   {
     "id": 14,
@@ -179,7 +179,7 @@
     "ingredients": "Huile d'Argan, Vitamine E",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 8.99
   },
   {
     "id": 15,
@@ -205,7 +205,7 @@
     "ingredients": "Musc, Vanille, Patchouli",
     "is_featured": false,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 30.99
   },
   {
     "id": 17,
@@ -218,7 +218,7 @@
     "ingredients": "Rose, Jasmin, Bergamote",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 45.00
   },
   {
     "id": 18,
@@ -231,7 +231,7 @@
     "ingredients": "Agrumes, Thé Vert",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 15.99
   },
   {
     "id": 19,
@@ -244,7 +244,7 @@
     "ingredients": "Ambre, Bois de Santal",
     "is_featured": true,
     "is_new": false,
-    "discount_price": 79.00
+    "discount_price": 50.00
   },
   {
     "id": 20,
@@ -257,7 +257,7 @@
     "ingredients": "Cèdre, Gingembre",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 25.00
   },
   {
     "id": 21,
@@ -296,7 +296,7 @@
     "ingredients": "Extrait de Bambou",
     "is_featured": true,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 7.99
   },
   {
     "id": 24,
@@ -465,7 +465,7 @@
     "ingredients": "Technologie Micro-Flex",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 8.99
   },
   {
     "id": 82,
@@ -491,7 +491,7 @@
     "ingredients": "Pigments métalliques",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 5.99
   },
   {
     "id": 84,
@@ -504,7 +504,7 @@
     "ingredients": "Formule Memory-Curl",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 5.99
   },
   {
     "id": 85,
@@ -517,7 +517,7 @@
     "ingredients": "Acide Hyaluronique, Collagène",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 6.50
   },
   {
     "id": 36,
@@ -556,7 +556,7 @@
     "ingredients": "Q10, Créatine",
     "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 7.00
   },
   {
     "id": 39,
@@ -608,7 +608,7 @@
     "ingredients": "Luminous 630 breveté",
     "is_featured": true,
     "is_new": true,
-    "discount_price": 19.90
+    "discount_price": 15.90
   },
   {
     "id": 43,
@@ -660,7 +660,7 @@
     "ingredients": "Acide Hyaluronique, Booster de Collagène",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 9.99
   },
   {
     "id": 47,
@@ -738,7 +738,7 @@
     "ingredients": "Filtres minéraux",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 10.00
   },
   {
     "id": 88,
@@ -790,7 +790,7 @@
     "ingredients": "Huile d'Avocat",
     "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 7.00
   },
   {
     "id": 52,
@@ -803,7 +803,7 @@
     "ingredients": "Micro-perles de cellulose",
     "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 8.00
   },
   {
     "id": 53,
@@ -816,7 +816,7 @@
     "ingredients": "Acide Hyaluronique, Algues rouges",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 11.99
   },
   {
     "id": 54,
@@ -829,7 +829,7 @@
     "ingredients": "Acide Hyaluronique naturel",
     "is_featured": true,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 7.00
   },
   {
     "id": 55,
@@ -842,7 +842,7 @@
     "ingredients": "Sable volcanique, Huile de Marula",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 5.00
   },
   {
     "id": 56,
@@ -881,7 +881,7 @@
     "ingredients": "Iris, Moka",
     "is_featured": false,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 14.00
   },
   {
     "id": 59,
@@ -946,7 +946,7 @@
     "ingredients": "Vanille, Caramel",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 17.00
   },
   {
     "id": 94,
@@ -959,7 +959,7 @@
     "ingredients": "Musc Blanc, Coton",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 5.99
   },
   {
     "id": 95,
@@ -972,7 +972,7 @@
     "ingredients": "Sucre, Menthe",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 6.99
   },
   {
     "id": 96,
@@ -1024,7 +1024,7 @@
     "ingredients": "Silice, Mica",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 7.99
   },
   {
     "id": 100,
@@ -1037,7 +1037,7 @@
     "ingredients": "Polymères fixateurs",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 6.00
   },
   {
     "id": 61,
@@ -1050,7 +1050,7 @@
     "ingredients": "Fractions de pré- et probiotiques",
     "is_featured": true,
     "is_new": false,
-    "discount_price": 75.00
+    "discount_price": 40.00
   },
   {
     "id": 62,
@@ -1063,7 +1063,7 @@
     "ingredients": "Acide Hyaluronique, Vitamine C+Niacinamide, Acide Férulique",
     "is_featured": true,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 99.99
   },
   {
     "id": 63,
@@ -1076,7 +1076,7 @@
     "ingredients": "Iris, Patchouli, Gourmandise",
     "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 90.00
   },
   {
     "id": 64,
@@ -1089,7 +1089,7 @@
     "ingredients": "Rose, Jasmin, Accord Chypré Blanc",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 60.00
   },
   {
     "id": 65,
@@ -1102,7 +1102,7 @@
     "ingredients": "Pro-Vitamine B5",
     "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 20.00
   },
   {
     "id": 66,
@@ -1115,7 +1115,7 @@
     "ingredients": "Pigments NAI, Perlite",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 25.00
   },
   {
     "id": 67,
@@ -1128,7 +1128,7 @@
     "ingredients": "Extraits de Rose, Acide Hyaluronique",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 20.00
   },
   {
     "id": 68,
@@ -1141,7 +1141,7 @@
     "ingredients": "Formule biphasée douce",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 22.00
   },
   {
     "id": 69,
@@ -1154,7 +1154,7 @@
     "ingredients": "Grands Extraits de Rose",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 149.99
   },
   {
     "id": 70,
@@ -1167,7 +1167,7 @@
     "ingredients": "Miel d'Acacia, Huile d'Amande Douce",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 20.00
   },
   {
     "id": 71,
@@ -1180,7 +1180,7 @@
     "ingredients": "Gelée Royale",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 24.00
   },
   {
     "id": 72,
@@ -1193,7 +1193,7 @@
     "ingredients": "Pêche, Rose, Ambre",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 70.00
   },
   {
     "id": 73,
@@ -1206,7 +1206,7 @@
     "ingredients": "Litchi, Magnolia, Poivre",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 30.99
   },
   {
     "id": 74,
@@ -1219,7 +1219,7 @@
     "ingredients": "Extrait de Thé Blanc",
     "is_featured": false,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 15.99
   },
   {
     "id": 75,
@@ -1232,7 +1232,7 @@
     "ingredients": "Pré- et probiotiques, Acide Hyaluronique",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 30.99
   },
   {
     "id": 76,
@@ -1245,7 +1245,7 @@
     "ingredients": "Sels d'aluminium",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 10.00
   },
   {
     "id": 77,
@@ -1258,7 +1258,7 @@
     "ingredients": "Miel, Extrait d'Amande Douce",
     "is_featured": false,
     "is_new": true,
-    "discount_price": null
+    "discount_price": 11.00
   },
   {
     "id": 78,
@@ -1271,7 +1271,7 @@
     "ingredients": "Pigments riches",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 20.99
   },
   {
     "id": 79,
@@ -1284,7 +1284,7 @@
     "ingredients": "Cires texturisantes",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 21.00
   },
   {
     "id": 80,
@@ -1297,7 +1297,7 @@
     "ingredients": "Ambre, Épices, Bois",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 20.55
   },
   {
     "id": 101,
@@ -1310,7 +1310,7 @@
     "ingredients": "Technologie Chronolux Power Signal",
     "is_featured": true,
     "is_new": false,
-    "discount_price": 99.00
+    "discount_price": 70.00
   },
   {
     "id": 102,
@@ -1323,7 +1323,7 @@
     "ingredients": "Sans corps gras, SPF 10",
     "is_featured": true,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 20.00
   },
   {
     "id": 103,
@@ -1453,7 +1453,7 @@
     "ingredients": "Gentiane de l'Himalaya",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 150.00
   },
   {
     "id": 113,
@@ -1466,7 +1466,7 @@
     "ingredients": "Extraits de plantes",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 15.99
   },
   {
     "id": 114,
@@ -1479,7 +1479,7 @@
     "ingredients": "Lis Blanc, Pivoine, Baie Rose",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 24.00
   },
   {
     "id": 115,
@@ -1505,7 +1505,7 @@
     "ingredients": "Technologie ChronoluxCB",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 20.90
   },
   {
     "id": 117,
@@ -1518,7 +1518,7 @@
     "ingredients": "Mica, Silice",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 40.00
   },
   {
     "id": 118,
@@ -1531,7 +1531,7 @@
     "ingredients": "Épices, Ambre, Patchouli",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 60.99
   },
   {
     "id": 119,
@@ -1544,7 +1544,7 @@
     "ingredients": "Huile de Camélia",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 20.99
   },
   {
     "id": 120,
@@ -1661,7 +1661,7 @@
     "ingredients": "Rose, Patchouli, Mousse de Chêne",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 45.99
   },
   {
     "id": 129,
@@ -1778,7 +1778,7 @@
     "ingredients": "Vitamine C 10%",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 30.99
   },
   {
     "id": 138,
@@ -1817,7 +1817,7 @@
     "ingredients": "Mandarine, Concombre, Primevère",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 30.99
   },
   {
     "id": 141,
@@ -2142,7 +2142,7 @@
     "ingredients": "Zinc PCA, Eau Thermale",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 8.99
   },
   {
     "id": 166,
@@ -2155,7 +2155,7 @@
     "ingredients": "15 minéraux rares",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 5.99
   },
   {
     "id": 167,
@@ -2168,7 +2168,7 @@
     "ingredients": "Rhamnose, Caféine, Escine",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 15.99
   },
   {
     "id": 168,
@@ -2181,7 +2181,7 @@
     "ingredients": "Sensirine, Panthénol, Glycérine",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 15.99
   },
   {
     "id": 169,
@@ -2246,7 +2246,7 @@
     "ingredients": "Niacinamide (Vitamine B3), Acide Glycolique",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 15.99
   },
   {
     "id": 174,
@@ -2259,7 +2259,7 @@
     "ingredients": "Sels d'aluminium, Perlite",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 3.99
   },
   {
     "id": 175,
@@ -2272,7 +2272,7 @@
     "ingredients": "Filtres Mexoryl XL, Acide Hyaluronique",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 10.99
   },
   {
     "id": 176,
@@ -2324,7 +2324,7 @@
     "ingredients": "Sucrose, Aloe Vera",
     "is_featured": false,
     "is_new": false,
-    "discount_price": null
+    "discount_price": 10.99
   },
   {
     "id": 180,

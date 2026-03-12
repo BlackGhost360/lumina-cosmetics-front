@@ -3,13 +3,13 @@ import { ShoppingCart, Eye } from "lucide-react";
 import { Product, useCart } from "../context/CartContext";
 import { motion } from "framer-motion";
 
-export default function ProductCard({ product }: { product: Product, key?: any }) {
+export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
 
   return (
     <motion.div
       whileHover={{ y: -8 }}
-      className="group relative bg-[var(--bg-primary)] rounded-2xl overflow-hidden shadow-sm border border-[var(--border)] transition-all hover:shadow-xl"
+      className="group relative bg-[var(--bg-primary)] rounded-2xl overflow-hidden shadow-sm border border-[var(--border)] transition-all hover:shadow-xl flex flex-col"
     >
       {/* Image Container */}
       <div className="relative aspect-[4/5] overflow-hidden">
@@ -34,17 +34,19 @@ export default function ProductCard({ product }: { product: Product, key?: any }
           )}
         </div>
 
-        {/* Quick Actions */}
-        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+        {/* Quick Actions - Corrigé pour Mobile */}
+        {/* 'lg:opacity-0 group-hover:opacity-100' -> Cache sur PC, affiche au hover */}
+        {/* 'flex opacity-100' -> Affiche par défaut sur mobile */}
+        <div className="absolute inset-0 bg-black/10 lg:bg-black/20 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
           <Link
             to={`/produit/${product.id}`}
-            className="w-12 h-12 bg-[var(--bg-primary)] rounded-full flex items-center justify-center text-[var(--text-primary)] hover:bg-[var(--accent-light)] transition-colors"
+            className="w-10 h-10 lg:w-12 lg:h-12 bg-[var(--bg-primary)] rounded-full flex items-center justify-center text-[var(--text-primary)] shadow-lg hover:bg-[var(--accent-light)] transition-colors"
           >
             <Eye size={20} />
           </Link>
           <button
             onClick={() => addToCart(product)}
-            className="w-12 h-12 bg-[var(--bg-primary)] rounded-full flex items-center justify-center text-[var(--text-primary)] hover:bg-[var(--accent-light)] transition-colors"
+            className="w-10 h-10 lg:w-12 lg:h-12 bg-[var(--bg-primary)] rounded-full flex items-center justify-center text-[var(--text-primary)] shadow-lg hover:bg-[var(--accent-light)] transition-colors"
           >
             <ShoppingCart size={20} />
           </button>
@@ -52,7 +54,7 @@ export default function ProductCard({ product }: { product: Product, key?: any }
       </div>
 
       {/* Content */}
-      <div className="p-6 space-y-2">
+      <div className="p-4 lg:p-6 space-y-2 flex-grow">
         <div className="flex justify-between items-start">
           <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)]">
             {product.brand}
@@ -61,20 +63,24 @@ export default function ProductCard({ product }: { product: Product, key?: any }
             {product.category}
           </p>
         </div>
+        
         <Link to={`/produit/${product.id}`}>
-          <h3 className="text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors truncate">
+          <h3 className="text-base lg:text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors truncate">
             {product.name}
           </h3>
         </Link>
-        <div className="flex items-center gap-2">
-          {product.discount_price ? (
-            <>
-              <span className="text-lg font-bold text-[var(--accent)]">{product.discount_price.toFixed(2)}€</span>
-              <span className="text-sm text-[var(--text-secondary)] line-through">{product.price.toFixed(2)}€</span>
-            </>
-          ) : (
-            <span className="text-lg font-bold text-[var(--text-primary)]">{product.price.toFixed(2)}€</span>
-          )}
+
+        <div className="flex items-center justify-between gap-2 pt-1">
+          <div className="flex items-center gap-2">
+            {product.discount_price ? (
+              <>
+                <span className="text-base lg:text-lg font-bold text-[var(--accent)]">{product.discount_price.toFixed(2)}€</span>
+                <span className="text-xs text-[var(--text-secondary)] line-through">{product.price.toFixed(2)}€</span>
+              </>
+            ) : (
+              <span className="text-base lg:text-lg font-bold text-[var(--text-primary)]">{product.price.toFixed(2)}€</span>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>

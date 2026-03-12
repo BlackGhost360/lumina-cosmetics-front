@@ -17,7 +17,7 @@ export default function Home() {
   const featuredProducts = useMemo(() => {
     return (productsData as Product[])
       .filter((p) => p.is_featured)
-      .slice(0, 16);
+      .slice(0, 12);
   }, []);
 
   const heroImage =
