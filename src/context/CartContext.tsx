@@ -6,6 +6,7 @@ export interface Product {
   price: number;
   description: string;
   category: string;
+  brand: string;
   image: string;
   ingredients: string;
   is_featured: boolean;

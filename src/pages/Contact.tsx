@@ -20,7 +20,7 @@ export default function Contact() {
               </div>
               <div>
                 <h3 className="font-bold text-[var(--text-primary)]">Email</h3>
-                <p className="text-sm text-[var(--text-secondary)]">contact@lumina-cosmetics.com</p>
+                <p className="text-sm text-[var(--text-secondary)]">contact@cosmetiquehouse.com</p>
                 <p className="text-xs text-[var(--text-secondary)]/60 mt-1">Réponse sous 24h ouvrées</p>
               </div>
             </div>

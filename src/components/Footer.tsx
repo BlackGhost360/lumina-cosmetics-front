@@ -54,7 +54,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center space-x-3 text-sm text-[var(--text-secondary)]">
                 <Mail size={16} className="text-[var(--accent)]" />
-                <span>contact@lumina-cosmetics.com</span>
+                <span>contact@cosmetiquehouse.com</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-[var(--text-secondary)]">
                 <Phone size={16} className="text-[var(--accent)]" />
