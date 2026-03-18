@@ -12,6 +12,12 @@ import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import Legal from "./pages/Legal";
 import Privacy from "./pages/Privacy";
+
+// --- IMPORTS DES PAGES DE PAIEMENT ---
+import CardPayment from "./pages/CardPayment";
+import PaypalPayment from "./pages/PaypalPayment";
+// -------------------------------------
+
 import { CartProvider } from "./context/CartContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import PageTransition from "./components/PageTransition";
@@ -32,6 +38,14 @@ export default function App() {
                   <Route path="/produit/:id" element={<ProductDetail />} />
                   <Route path="/panier" element={<Cart />} />
                   <Route path="/commande" element={<Checkout />} />
+                  
+                  {/* --- ROUTES DE PAIEMENT INTÉGRÉES --- */}
+                  <Route path="/paiement/carte" element={<CardPayment />} />
+                  <Route path="/paiement/paypal" element={<PaypalPayment />} />
+                  {/* Note: Le paiement à la livraison (cod) n'a pas besoin de route 
+                      car il redirige directement vers confirmation */}
+                  {/* ------------------------------------- */}
+
                   <Route path="/confirmation/:orderId" element={<Confirmation />} />
                   <Route path="/suivi" element={<Tracking />} />
                   <Route path="/contact" element={<Contact />} />
