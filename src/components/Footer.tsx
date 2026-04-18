@@ -11,7 +11,7 @@ export default function Footer() {
             <h3 className="text-xl font-serif font-bold text-[var(--accent)]">
               <img 
                 src={`${import.meta.env.BASE_URL}assets/images/logo.png`} 
-                alt="Logo Lumina Cosmetics"
+                alt="Logo cosmetique House"
                 height="50"
                 width="110"
               />			
@@ -70,7 +70,7 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-[var(--border)] text-center">
           <p className="text-xs text-[var(--text-secondary)]">
-            &copy; {new Date().getFullYear()} Lumina Cosmetics. Tous droits réservés.
+            &copy; {new Date().getFullYear()} cosmetique House. Tous droits réservés.
           </p>
         </div>
       </div>

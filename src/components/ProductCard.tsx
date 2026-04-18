@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
+  const API_URL = import.meta.env.VITE_API_URL_BASE;
 
   return (
     <motion.div
@@ -14,7 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
       {/* Image Container */}
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
-          src={product.image}
+          src={`${API_URL}/storage/${product.image}`}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           referrerPolicy="no-referrer"
@@ -33,7 +34,6 @@ export default function ProductCard({ product }: { product: Product }) {
             </span>
           )}
         </div>
-
         {/* Quick Actions - Corrigé pour Mobile */}
         {/* 'lg:opacity-0 group-hover:opacity-100' -> Cache sur PC, affiche au hover */}
         {/* 'flex opacity-100' -> Affiche par défaut sur mobile */}

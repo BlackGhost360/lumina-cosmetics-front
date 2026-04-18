@@ -1,24 +1,26 @@
-import { useState, useMemo } from "react";
+// src/pages/Home.tsx
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Star, ShieldCheck, Truck, Sparkles } from "lucide-react";
-import { Product } from "../context/CartContext";
 import ProductCard from "../components/ProductCard";
 import { useTheme } from "../context/ThemeContext";
 
-// ✅ Import direct comme dans Catalog.tsx
-import productsData from "../data/produits.json";
+// ✅ Import du hook API et du type
+import { useAllProductsAuto, Product } from "../api/product.api";
 
 export default function Home() {
   const { theme } = useTheme();
 
-  // ✅ Utilisation de useMemo pour filtrer les produits "featured" 
-  // Cela évite de recalculer le filtre à chaque re-render inutile
+  // ✅ Utilisation de l'API au lieu de l'import JSON direct
+  const { products: allProducts, loading: isLoading } = useAllProductsAuto();
+
+  // ✅ Filtrage des produits "featured" via useMemo
   const featuredProducts = useMemo(() => {
-    return (productsData as Product[])
+    return allProducts
       .filter((p) => p.is_featured)
-      .slice(0, 12);
-  }, []);
+      .slice(0, 4); // On en prend 4 pour la grille home
+  }, [allProducts]);
 
   const heroImage =
     theme === "light"
@@ -119,10 +121,26 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* ✅ Grille avec Logique de Chargement (Skeletons) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {isLoading ? (
+            // Affichage des Skeletons pendant le chargement
+            [...Array(4)].map((_, i) => (
+              <div key={`skeleton-home-${i}`} className="animate-pulse bg-[var(--bg-secondary)] rounded-2xl h-[400px] w-full flex flex-col p-4 space-y-4">
+                <div className="bg-[var(--border)] rounded-xl h-2/3 w-full" />
+                <div className="space-y-2">
+                  <div className="bg-[var(--border)] h-4 w-3/4 rounded" />
+                  <div className="bg-[var(--border)] h-4 w-1/2 rounded" />
+                </div>
+                <div className="bg-[var(--border)] h-10 w-full rounded-xl mt-auto" />
+              </div>
+            ))
+          ) : (
+            // Affichage des produits réels une fois chargés
+            featuredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          )}
         </div>
       </section>
 
@@ -130,7 +148,6 @@ export default function Home() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl overflow-hidden bg-[var(--accent)] text-white p-8 md:p-24 flex flex-col lg:flex-row items-center gap-12">
           
-          {/* Texte et Formulaire */}
           <div className="flex-1 space-y-6 w-full text-center lg:text-left z-10">
             <div className="inline-flex items-center space-x-2 text-[var(--accent-light)]">
               <Sparkles size={20} />
@@ -145,7 +162,6 @@ export default function Home() {
               Inscrivez-vous à notre newsletter et recevez un code promo exclusif.
             </p>
 
-            {/* Formulaire Responsive : Colonne sur mobile, Ligne sur tablette+ */}
             <form 
               onSubmit={(e) => e.preventDefault()} 
               className="flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto lg:mx-0"
@@ -164,7 +180,6 @@ export default function Home() {
             </form>
           </div>
 
-          {/* Image : Cachée sur petit mobile ou ajustée */}
           <div className="flex-1 w-full max-w-sm lg:max-w-none">
             <img
               src={`${import.meta.env.BASE_URL}assets/images/PromoBanner.avif`} 
@@ -172,7 +187,6 @@ export default function Home() {
               className="rounded-2xl shadow-2xl rotate-0 md:rotate-3 hover:rotate-0 transition-transform duration-500 w-full h-auto object-cover"
             />
           </div>
-
         </div>
       </section>
     </div>

@@ -2,21 +2,47 @@
 import React, { useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ShoppingCart, ArrowLeft, ShieldCheck, Truck, RefreshCw, Star } from "lucide-react";
-import { Product, useCart } from "../context/CartContext";
-import { motion } from "framer-motion";
+import { useCart } from "../context/CartContext";
+import { motion, AnimatePresence } from "framer-motion";
 
-// ✅ Import direct du JSON
-import productsData from "../data/produits.json";
+// ✅ Import du hook API et des types
+import { useAllProductsAuto } from "../api/product.api";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const { addToCart } = useCart();
   const [activeTab, setActiveTab] = useState("description");
 
-  const product = useMemo(() => {
-    return (productsData as Product[]).find((p) => p.id === Number(id)) || null;
-  }, [id]);
+  // ✅ Récupération des données via l'API
+  const { products: allProducts, loading: isLoading } = useAllProductsAuto();
+  
+  const API_URL = import.meta.env.VITE_API_URL_BASE;
 
+  // ✅ Recherche du produit spécifique
+  const product = useMemo(() => {
+    return allProducts.find((p) => p.id === Number(id)) || null;
+  }, [allProducts, id]);
+
+  // --- ÉTAT DE CHARGEMENT (SKELETON) ---
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 animate-pulse">
+        <div className="h-4 w-32 bg-[var(--bg-secondary)] rounded mb-8" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+          <div className="aspect-[4/5] bg-[var(--bg-secondary)] rounded-3xl" />
+          <div className="space-y-6">
+            <div className="h-4 w-20 bg-[var(--bg-secondary)] rounded" />
+            <div className="h-10 w-3/4 bg-[var(--bg-secondary)] rounded" />
+            <div className="h-6 w-24 bg-[var(--bg-secondary)] rounded" />
+            <div className="h-24 w-full bg-[var(--bg-secondary)] rounded-xl" />
+            <div className="h-14 w-full bg-[var(--bg-secondary)] rounded-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // --- ÉTAT PRODUIT INTROUVABLE ---
   if (!product) {
     return (
       <div className="h-screen flex flex-col items-center justify-center p-4 text-center">
@@ -49,13 +75,13 @@ export default function ProductDetail() {
             className="aspect-[4/5] rounded-2xl sm:rounded-3xl overflow-hidden bg-[var(--bg-secondary)] shadow-sm"
           >
             <img
-              src={`${import.meta.env.BASE_URL}${product.image}`}
+              src={`${API_URL}/storage/${product.image}`}
               alt={product.name}
               className="w-full h-full object-cover"
             />
           </motion.div>
           
-          {/* Miniatures */}
+          {/* Miniatures (Simulées avec l'image principale) */}
           <div className="flex gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-4 sm:overflow-visible no-scrollbar">
             {[1, 2, 3, 4].map((i) => (
               <div 
@@ -63,7 +89,7 @@ export default function ProductDetail() {
                 className="w-20 h-20 sm:w-auto sm:aspect-square shrink-0 rounded-xl overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border)] cursor-pointer opacity-60 hover:opacity-100 transition-opacity"
               >
                 <img 
-                   src={`${import.meta.env.BASE_URL}${product.image}`} 
+                   src={`${API_URL}/storage/${product.image}`} 
                    alt={`${product.name} view ${i}`} 
                    className="w-full h-full object-cover" 
                 />
@@ -151,21 +177,31 @@ export default function ProductDetail() {
                 ))}
               </div>
               <div className="py-6 text-sm text-[var(--text-secondary)] leading-relaxed min-h-[100px]">
-                {activeTab === "description" && (
-                  <p>Le soin <strong>{product.name}</strong> a été formulé pour répondre aux exigences des peaux les plus délicates. Sa texture sensorielle garantit un confort immédiat et durable.</p>
-                )}
-                {activeTab === "ingredients" && (
-                  <p className="italic leading-loose">
-                    {product.ingredients || "Aqua (Water), Glycerin, Squalane, Cetearyl Alcohol, Hyaluronic Acid, Tocopherol..."}
-                  </p>
-                )}
-                {activeTab === "livraison" && (
-                  <ul className="space-y-2">
-                    <li className="flex items-center">📦 Livraison Colissimo sous 2-3 jours ouvrés.</li>
-                    <li className="flex items-center">✨ Échantillons offerts dans chaque commande.</li>
-                    <li className="flex items-center">🔄 Retours facilités via notre portail en ligne.</li>
-                  </ul>
-                )}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {activeTab === "description" && (
+                      <p>Le soin <strong>{product.name}</strong> a été formulé pour répondre aux exigences des peaux les plus délicates. Sa texture sensorielle garantit un confort immédiat et durable.</p>
+                    )}
+                    {activeTab === "ingredients" && (
+                      <p className="italic leading-loose">
+                        {product.ingredients || "Aqua (Water), Glycerin, Squalane, Cetearyl Alcohol, Hyaluronic Acid, Tocopherol, Ethylhexylglycerin..."}
+                      </p>
+                    )}
+                    {activeTab === "livraison" && (
+                      <ul className="space-y-2">
+                        <li className="flex items-center">📦 Livraison Colissimo sous 2-3 jours ouvrés.</li>
+                        <li className="flex items-center">✨ Échantillons offerts dans chaque commande.</li>
+                        <li className="flex items-center">🔄 Retours facilités sous 30 jours.</li>
+                      </ul>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
 
@@ -182,7 +218,6 @@ export default function ProductDetail() {
   );
 }
 
-// Composant interne Badge pour la réutilisation
 function Badge({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
     <div className="flex flex-col items-center text-center space-y-2 group">

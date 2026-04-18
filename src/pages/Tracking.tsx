@@ -1,53 +1,35 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Search, Package, Truck, CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import { Search, Package, Truck, CheckCircle2, Clock, AlertCircle, Mail } from "lucide-react";
 import { motion } from "framer-motion";
-
-interface Order {
-  id: string;
-  customer_name: string;
-  total: number;
-  status: string;
-  created_at: string;
-  address: string;
-  city: string;
-  items: any[];
-}
+import { getOrderByNumber, OrderDetail } from "../api/order.api";
 
 export default function Tracking() {
   const [searchParams] = useSearchParams();
   const [orderId, setOrderId] = useState(searchParams.get("orderId") || "");
-  const [order, setOrder] = useState<Order | null>(null);
+  const [email, setEmail] = useState(searchParams.get("email") || "");
+  const [order, setOrder] = useState<OrderDetail | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL_BASE;
+
   const handleSearch = async (e?: any) => {
     if (e) e.preventDefault();
-    if (!orderId) return;
+    if (!orderId || !email) {
+      setError("Veuillez remplir le numéro de commande et l'email.");
+      return;
+    }
 
     setLoading(true);
     setError("");
+    
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-      const found = orders.find((o: any) => o.id === orderId);
-      
-      if (!found) throw new Error("Commande non trouvée");
-      
-      // Adapt structure if necessary
-      setOrder({
-        ...found,
-        customer_name: found.customer.firstName + " " + found.customer.lastName,
-        address: found.customer.address,
-        city: found.customer.city,
-        items: found.items.map((item: any) => ({
-          ...item,
-          product_image: item.image // Ensure image property matches
-        }))
-      });
+      // Appel à l'API réelle définie dans order.api.ts
+      const data = await getOrderByNumber(orderId, email);
+      setOrder(data);
     } catch (err: any) {
+      // On récupère le message d'erreur lancé par le switch case de getOrderByNumber
       setError(err.message);
       setOrder(null);
     } finally {
@@ -55,69 +37,82 @@ export default function Tracking() {
     }
   };
 
+  // Lancement automatique si les params sont dans l'URL (ex: retour de mail)
   useEffect(() => {
-    if (searchParams.get("orderId")) {
+    if (searchParams.get("orderId") && searchParams.get("email")) {
       handleSearch();
     }
   }, []);
 
   const statuses = [
-    { name: "En attente", icon: <Clock size={20} />, color: "bg-yellow-500" },
-    { name: "En préparation", icon: <Package size={20} />, color: "bg-blue-500" },
-    { name: "Expédiée", icon: <Truck size={20} />, color: "bg-purple-500" },
-    { name: "Livrée", icon: <CheckCircle2 size={20} />, color: "bg-green-500" },
+    { name: "En attente", icon: <Clock size={20} />, id: "pending" },
+    { name: "En préparation", icon: <Package size={20} />, id: "processing" },
+    { name: "Expédiée", icon: <Truck size={20} />, id: "shipped" },
+    { name: "Livrée", icon: <CheckCircle2 size={20} />, id: "delivered" },
   ];
 
-  const currentStatusIndex = statuses.findIndex(s => s.name === order?.status);
+  // Logique pour trouver l'index actuel basé sur le status retourné par l'API
+  // Adapte "order.status" selon les strings exactes renvoyées par ton backend
+  const currentStatusIndex = statuses.findIndex(s => s.name.toLowerCase() === order?.status.toLowerCase() || s.id === order?.status);
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center space-y-4 mb-12">
         <h1 className="text-3xl font-serif font-bold text-[var(--text-primary)]">Suivi de commande</h1>
-        <p className="text-[var(--text-secondary)]">Entrez votre numéro de commande pour connaître son état d'avancement.</p>
+        <p className="text-[var(--text-secondary)]">Saisissez vos informations pour localiser votre colis.</p>
       </div>
 
-      {/* Search Bar */}
-      <form onSubmit={handleSearch} className="max-w-md mx-auto mb-16">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Ex: ORD-ABC123XYZ"
-            value={orderId}
-            onChange={(e) => setOrderId(e.target.value.toUpperCase())}
-            className="w-full pl-12 pr-32 py-4 bg-[var(--bg-primary)] border border-[var(--border)] rounded-full focus:outline-none focus:border-[var(--accent)] shadow-sm text-[var(--text-primary)]"
-          />
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={20} />
-          <button
-            type="submit"
-            disabled={loading}
-            className="absolute right-2 top-2 bottom-2 px-6 bg-[var(--accent)] text-white font-bold rounded-full hover:bg-[var(--accent)]/90 transition-colors disabled:opacity-50"
-          >
-            {loading ? "..." : "Suivre"}
-          </button>
+      {/* Formulaire de recherche double (ID + Email) */}
+      <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-16 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="N° de commande (ex: ORD-123)"
+              value={orderId}
+              onChange={(e) => setOrderId(e.target.value.toUpperCase())}
+              className="w-full pl-12 pr-4 py-4 bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl focus:outline-none focus:border-[var(--accent)] shadow-sm text-[var(--text-primary)]"
+            />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={20} />
+          </div>
+          <div className="relative">
+            <input
+              type="email"
+              placeholder="Votre email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl focus:outline-none focus:border-[var(--accent)] shadow-sm text-[var(--text-primary)]"
+            />
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]" size={20} />
+          </div>
         </div>
+        
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-4 bg-[var(--accent)] text-white font-bold rounded-2xl hover:bg-[var(--accent)]/90 transition-all disabled:opacity-50 shadow-lg shadow-[var(--accent)]/20"
+        >
+          {loading ? "Recherche en cours..." : "Rechercher la commande"}
+        </button>
+
         {error && (
-          <p className="mt-4 text-sm text-red-500 flex items-center justify-center">
+          <motion.p initial={{opacity:0}} animate={{opacity:1}} className="text-sm text-red-500 flex items-center justify-center">
             <AlertCircle size={14} className="mr-1" /> {error}
-          </p>
+          </motion.p>
         )}
       </form>
 
-      {/* Order Details */}
+      {/* Détails de la commande */}
       {order && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-8"
-        >
-          {/* Status Stepper */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+          
+          {/* Stepper de Progression */}
           <div className="bg-[var(--bg-primary)] rounded-3xl p-8 border border-[var(--border)] shadow-sm">
             <div className="flex flex-col md:flex-row justify-between items-center gap-8 relative">
-              {/* Progress Line */}
               <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-[var(--bg-secondary)] -translate-y-1/2 z-0">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${(currentStatusIndex / (statuses.length - 1)) * 100}%` }}
+                  animate={{ width: `${Math.max(0, (currentStatusIndex / (statuses.length - 1)) * 100)}%` }}
                   className="h-full bg-[var(--accent)]"
                 />
               </div>
@@ -129,7 +124,7 @@ export default function Tracking() {
                   }`}>
                     {status.icon}
                   </div>
-                  <span className={`text-xs font-bold uppercase tracking-widest ${
+                  <span className={`text-[10px] font-bold uppercase tracking-widest ${
                     index <= currentStatusIndex ? "text-[var(--accent)]" : "text-[var(--text-secondary)]"
                   }`}>
                     {status.name}
@@ -140,41 +135,51 @@ export default function Tracking() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Info */}
+            {/* Informations client et commande */}
             <div className="bg-[var(--bg-primary)] rounded-3xl p-8 border border-[var(--border)] shadow-sm space-y-6">
-              <h2 className="text-xl font-bold text-[var(--text-primary)]">Détails de la commande</h2>
+              <h2 className="text-xl font-bold text-[var(--text-primary)]">Informations</h2>
               <div className="space-y-4 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-[var(--text-secondary)]">Client</span>
-                  <span className="font-bold text-[var(--text-primary)]">{order.customer_name}</span>
+                <div className="flex justify-between border-b border-[var(--border)] pb-2">
+                  <span className="text-[var(--text-secondary)]">Commande</span>
+                  <span className="font-bold text-[var(--text-primary)]">#{order.order_number}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between border-b border-[var(--border)] pb-2">
+                  <span className="text-[var(--text-secondary)]">Destinataire</span>
+                  <span className="font-bold text-[var(--text-primary)]">{order.customer.name} {order.customer.surname}</span>
+                </div>
+                <div className="flex justify-between border-b border-[var(--border)] pb-2">
                   <span className="text-[var(--text-secondary)]">Date</span>
-                  <span className="font-bold text-[var(--text-primary)]">{new Date(order.created_at).toLocaleDateString()}</span>
+                  <span className="font-bold text-[var(--text-primary)]">{new Date(order.created_at).toLocaleDateString('fr-FR')}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between border-b border-[var(--border)] pb-2">
+                  <span className="text-[var(--text-secondary)]">Livraison</span>
+                  <span className="font-bold text-[var(--text-primary)] text-right">{order.customer.address}, {order.customer.city}</span>
+                </div>
+                <div className="flex justify-between pt-2 text-lg">
                   <span className="text-[var(--text-secondary)]">Total</span>
-                  <span className="font-bold text-[var(--accent)]">{order.total.toFixed(2)}€</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--text-secondary)]">Adresse</span>
-                  <span className="font-bold text-[var(--text-primary)] text-right">{order.address}, {order.city}</span>
+                  <span className="font-bold text-[var(--accent)]">{order.total_price}€</span>
                 </div>
               </div>
             </div>
 
-            {/* Items */}
+            {/* Liste des articles */}
             <div className="bg-[var(--bg-primary)] rounded-3xl p-8 border border-[var(--border)] shadow-sm space-y-6">
-              <h2 className="text-xl font-bold text-[var(--text-primary)]">Articles</h2>
-              <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
-                {order.items.map((item: any) => (
-                  <div key={item.id} className="flex gap-4">
-                    <img src={item.product_image} alt="" className="w-12 h-12 rounded-lg object-cover" referrerPolicy="no-referrer" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-[var(--text-primary)] truncate">{item.name}</p>
-                      <p className="text-xs text-[var(--text-secondary)]">Qté: {item.quantity}</p>
+              <h2 className="text-xl font-bold text-[var(--text-primary)]">Articles ({order.items.length})</h2>
+              <div className="space-y-4 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+                {order.items.map((item, idx) => (
+                  <div key={idx} className="flex gap-4 items-center">
+                    <div className="w-14 h-14 rounded-xl overflow-hidden bg-[var(--bg-secondary)] shrink-0">
+                      <img 
+                        src={`${API_URL}/storage/${item.image}`} 
+                        alt={item.product_name} 
+                        className="w-full h-full object-cover" 
+                      />
                     </div>
-                    <span className="text-sm font-bold text-[var(--text-primary)]">{item.price.toFixed(2)}€</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-[var(--text-primary)] truncate">{item.product_name}</p>
+                      <p className="text-xs text-[var(--text-secondary)]">Quantité: {item.quantity}</p>
+                    </div>
+                    <span className="text-sm font-bold text-[var(--text-primary)]">{item.total}€</span>
                   </div>
                 ))}
               </div>
